@@ -19,14 +19,16 @@ class _OnlineStorePageState extends State<OnlineStorePage> {
       appBar: AppBar(
         title: const Text('Geekgarden Store'),
       ),
-      body: ListView.builder(
-        itemBuilder: (context, index) {
-          /* return Text(
-              storeController.onlineProductList[index].obs.value.title!); */
-          return ItemListOnlineProduct(
-              product: storeController.onlineProductList[index]);
+      body: Obx(
+        () {
+          return ListView.builder(
+            itemBuilder: (context, index) {
+              return ItemListOnlineProduct(
+                  product: storeController.onlineProductList[index]);
+            },
+            itemCount: storeController.onlineProductList.length,
+          );
         },
-        itemCount: storeController.onlineProductList.length,
       ),
     );
   }

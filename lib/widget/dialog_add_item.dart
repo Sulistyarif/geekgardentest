@@ -231,15 +231,23 @@ class _DialogAddItemState extends State<DialogAddItem> {
   }
 
   void _onProductAdded() {
-    LocalProduct newProduct = LocalProduct(
-      id: Utils.getRandomString(9),
-      title: _controllerTitle.text,
-      price: double.parse(_controllerPrice.text),
-      description: _controllerDesc.text,
-      image: _image,
-      category: _controllerCategory.text,
-    );
-    _storeController.addLocalProduct(newProduct);
-    Get.back();
+    if (_controllerTitle.text.isEmpty ||
+        _controllerPrice.text.isEmpty ||
+        _controllerDesc.text.isEmpty ||
+        _controllerCategory.text.isEmpty ||
+        _image == null) {
+      Get.snackbar('Warning', 'Please complete the item details');
+    } else {
+      LocalProduct newProduct = LocalProduct(
+        id: Utils.getRandomString(9),
+        title: _controllerTitle.text,
+        price: double.parse(_controllerPrice.text),
+        description: _controllerDesc.text,
+        image: _image,
+        category: _controllerCategory.text,
+      );
+      _storeController.addLocalProduct(newProduct);
+      Get.back();
+    }
   }
 }

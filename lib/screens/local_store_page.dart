@@ -37,14 +37,24 @@ class _LocalStorePageState extends State<LocalStorePage> {
               child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: Obx(() {
-                    return ListView.builder(
-                      physics: const BouncingScrollPhysics(
-                          parent: AlwaysScrollableScrollPhysics()),
-                      itemBuilder: (context, index) {
-                        return ItemListLocalProduct(
-                            product: storeController.localProductList[index]);
-                      },
-                      itemCount: storeController.localProductList.length,
+                    return SizedBox(
+                      child: ListView.builder(
+                        physics: const BouncingScrollPhysics(
+                            parent: AlwaysScrollableScrollPhysics()),
+                        itemBuilder: (context, index) {
+                          if (storeController.localProductList.isNotEmpty) {
+                            return ItemListLocalProduct(
+                                product:
+                                    storeController.localProductList[index]);
+                          } else {
+                            return const Text(
+                              'Please tap the button below to add items.',
+                              style: TextStyle(color: Colors.grey),
+                            );
+                          }
+                        },
+                        itemCount: storeController.localProductList.length,
+                      ),
                     );
                   })),
             ),
