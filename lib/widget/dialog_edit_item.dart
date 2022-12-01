@@ -5,9 +5,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../data/store_controller.dart';
-import 'dart:io' as Io;
-
-import '../data/utils.dart';
+import 'dart:io' as io;
 
 class DialogEditItem extends StatefulWidget {
   final LocalProduct product;
@@ -20,7 +18,7 @@ class DialogEditItem extends StatefulWidget {
 class _DialogEditItemState extends State<DialogEditItem> {
   final _storeController = Get.find<StoreController>();
   bool isImageChanged = false;
-  Io.File? _image;
+  io.File? _image;
   final _picker = ImagePicker();
   final _controllerTitle = TextEditingController();
   final _controllerPrice = TextEditingController();
@@ -222,7 +220,7 @@ class _DialogEditItemState extends State<DialogEditItem> {
         await _picker.pickImage(source: ImageSource.gallery, imageQuality: 20);
     if (imagePicked != null) {
       setState(() {
-        _image = Io.File(imagePicked.path);
+        _image = io.File(imagePicked.path);
         isImageChanged = true;
       });
     }
@@ -233,7 +231,7 @@ class _DialogEditItemState extends State<DialogEditItem> {
         await _picker.pickImage(source: ImageSource.camera, imageQuality: 20);
     if (imagePicked != null) {
       setState(() {
-        _image = Io.File(imagePicked.path);
+        _image = io.File(imagePicked.path);
         isImageChanged = true;
       });
     }

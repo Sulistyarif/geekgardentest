@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:geekgarden_test/data/store_controller.dart';
 import 'package:geekgarden_test/data/utils.dart';
 import 'package:geekgarden_test/models/local_product.dart';
-import 'package:geekgarden_test/models/product.dart';
 import 'package:geekgarden_test/widget/custom_rounded_button.dart';
 import 'package:get/get.dart';
-import 'dart:io' as Io;
+import 'dart:io' as io;
 
 import 'package:image_picker/image_picker.dart';
 
@@ -19,7 +18,7 @@ class DialogAddItem extends StatefulWidget {
 class _DialogAddItemState extends State<DialogAddItem> {
   final _storeController = Get.find<StoreController>();
   bool isImageChanged = false;
-  Io.File? _image;
+  io.File? _image;
   final _picker = ImagePicker();
   final _controllerTitle = TextEditingController();
   final _controllerPrice = TextEditingController();
@@ -214,7 +213,7 @@ class _DialogAddItemState extends State<DialogAddItem> {
         await _picker.pickImage(source: ImageSource.gallery, imageQuality: 20);
     if (imagePicked != null) {
       setState(() {
-        _image = Io.File(imagePicked.path);
+        _image = io.File(imagePicked.path);
         isImageChanged = true;
       });
     }
@@ -225,7 +224,7 @@ class _DialogAddItemState extends State<DialogAddItem> {
         await _picker.pickImage(source: ImageSource.camera, imageQuality: 20);
     if (imagePicked != null) {
       setState(() {
-        _image = Io.File(imagePicked.path);
+        _image = io.File(imagePicked.path);
         isImageChanged = true;
       });
     }

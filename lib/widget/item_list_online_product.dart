@@ -1,32 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:geekgarden_test/data/store_controller.dart';
-import 'package:geekgarden_test/models/local_product.dart';
-import 'package:geekgarden_test/widget/dialog_edit_item.dart';
-import 'package:geekgarden_test/widget/dialog_item_tap.dart';
-import 'package:get/get.dart';
+import 'package:geekgarden_test/models/product.dart';
 
-class ItemListLocalProduct extends StatelessWidget {
-  final LocalProduct product;
-  ItemListLocalProduct({super.key, required this.product});
-  final storeController = Get.find<StoreController>();
+class ItemListOnlineProduct extends StatelessWidget {
+  final Product product;
+  const ItemListOnlineProduct({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Get.dialog(
-          DialogItemTap(
-            onDelete: () {
-              storeController.localProductList.remove(product);
-              Get.back();
-            },
-            onEdit: () {
-              Get.back();
-              Get.dialog(DialogEditItem(product: product));
-            },
-          ),
-        );
-      },
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: Card(
         elevation: 5,
         shape: RoundedRectangleBorder(
@@ -47,10 +29,10 @@ class ItemListLocalProduct extends StatelessWidget {
                         borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(15),
                             topLeft: Radius.circular(15)),
-                        child: Image.file(
+                        child: Image.network(
                           product.image!,
-                          // height: MediaQuery.of(context).size.height * 0.15,
-                          // width: MediaQuery.of(context).size.height * 0.30,
+                          height: MediaQuery.of(context).size.height * 0.15,
+                          width: MediaQuery.of(context).size.height * 0.30,
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -78,6 +60,8 @@ class ItemListLocalProduct extends StatelessWidget {
                   children: [
                     Text(
                       product.title!,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 18),
                     ),
@@ -86,21 +70,21 @@ class ItemListLocalProduct extends StatelessWidget {
                       product.description!,
                       maxLines: 4,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(),
+                      style: const TextStyle(fontSize: 12),
                     ),
                     const SizedBox(height: 10),
                     Padding(
                       padding: const EdgeInsets.only(right: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
-                        children: const [
-                          Icon(
+                        children: [
+                          const Icon(
                             Icons.star,
                             color: Colors.black,
                           ),
                           Text(
-                            '0.0',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            product.rating!.rate!.toString(),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           )
                         ],
                       ),

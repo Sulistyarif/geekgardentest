@@ -10,10 +10,11 @@ void main() {
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
-  final cartController = Get.put(StoreController());
+  final storeController = Get.put(StoreController());
 
   @override
   Widget build(BuildContext context) {
+    storeController.loadOnlineProduct();
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Geekgarden Test',

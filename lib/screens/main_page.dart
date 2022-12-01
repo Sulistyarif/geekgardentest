@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geekgarden_test/data/store_controller.dart';
-import 'package:geekgarden_test/widget/custom_rounded_button.dart';
-import 'package:geekgarden_test/widget/dialog_add_item.dart';
-import 'package:geekgarden_test/widget/item_list_local_product.dart';
+import 'package:geekgarden_test/screens/local_store_page.dart';
+import 'package:geekgarden_test/screens/online_store_page.dart';
 import 'package:get/get.dart';
 
 class MainPage extends StatefulWidget {
@@ -16,42 +15,89 @@ class _MainPageState extends State<MainPage> {
   final storeController = Get.find<StoreController>();
 
   @override
+  void initState() {
+    storeController.loadOnlineProduct();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Geekgarden Store'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              'Local Store',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-            ),
-            Expanded(
-              child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: Obx(() {
-                    return ListView.builder(
-                      physics: const BouncingScrollPhysics(
-                          parent: AlwaysScrollableScrollPhysics()),
-                      itemBuilder: (context, index) {
-                        return ItemListLocalProduct(
-                            product: storeController.localProductList[index]);
-                      },
-                      itemCount: storeController.localProductList.length,
-                    );
-                  })),
-            ),
-            CustomRoundedButton(
-              onBtTap: () {
-                Get.dialog(const DialogAddItem());
+            // local store is intended for manually CRUD list of items
+            GestureDetector(
+              onTap: () {
+                Get.to(const LocalStorePage());
               },
-              btText: 'Add an Item',
-            )
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.1,
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(
+                      Icons.home_outlined,
+                      color: Colors.white,
+                      size: 40,
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      'Local Store',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.05,
+            ),
+            // online store is intended for items that take from API
+            GestureDetector(
+              onTap: () {
+                Get.to(const OnlineStorePage());
+              },
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.1,
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(
+                      Icons.public_outlined,
+                      color: Colors.white,
+                      size: 40,
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      'Online Store',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),

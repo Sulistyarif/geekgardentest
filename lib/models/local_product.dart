@@ -1,4 +1,4 @@
-import 'dart:io' as Io;
+import 'dart:io' as io;
 
 class LocalProduct {
   String? id;
@@ -6,7 +6,7 @@ class LocalProduct {
   double? price;
   String? description;
   String? category;
-  Io.File? image;
+  io.File? image;
 
   LocalProduct(
       {this.id,
